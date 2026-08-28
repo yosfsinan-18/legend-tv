@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEGEND TV </title>
+    <title>LEGEND TV</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
     <style>
         :root {
             --bg-color: #0f1016;
@@ -44,6 +46,61 @@
             overflow-x: hidden;
         }
 
+        /* Loading Screen Overlay */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+            gap: 20px;
+        }
+
+        .loading-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+            animation: pulseLogo 1s infinite alternate;
+        }
+
+        @keyframes pulseLogo {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        .loading-bar-container {
+            width: 220px;
+            height: 10px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            transition: width 0.05s linear;
+        }
+
+        .loading-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+
         /* Language Selection Screen */
         #lang-overlay {
             position: fixed;
@@ -52,7 +109,7 @@
             width: 100%;
             height: 100%;
             background-color: var(--bg-color);
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -102,7 +159,7 @@
             border-color: var(--accent-color);
         }
 
-        /* Password Screen with Quick Select Buttons */
+        /* Password Screen with Logo & Home Screen Guide */
         #login-overlay {
             position: fixed;
             top: 0;
@@ -114,12 +171,13 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            padding: 20px;
+            padding: 15px;
+            overflow-y: auto;
         }
 
         .login-box {
             background-color: var(--card-bg);
-            padding: 30px;
+            padding: 20px;
             border-radius: 16px;
             width: 100%;
             max-width: 360px;
@@ -128,27 +186,38 @@
             border: 2px solid var(--accent-color);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
+            margin: auto;
+        }
+
+        .login-logo {
+            width: 65px;
+            height: 65px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin: 0 auto;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 10px rgba(229,9,20,0.3);
         }
 
         .login-box h2 {
             color: var(--accent-color);
-            font-size: 22px;
+            font-size: 19px;
         }
 
         .login-box p {
             color: var(--text-color);
-            font-size: 13px;
+            font-size: 12px;
             opacity: 0.9;
         }
 
         .login-input {
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
             background: var(--bg-color);
             color: var(--text-color);
-            font-size: 15px;
+            font-size: 14px;
             text-align: center;
         }
 
@@ -156,17 +225,16 @@
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
         }
 
-        /* Two Quick Password Buttons */
         .quick-pass-container {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .quick-pass-btn {
@@ -174,9 +242,9 @@
             background-color: var(--bg-color);
             color: var(--accent-color);
             border: 1px solid var(--accent-color);
-            padding: 10px 5px;
+            padding: 8px 4px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
@@ -194,9 +262,9 @@
             background-color: transparent;
             color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 8px;
+            padding: 6px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             cursor: pointer;
         }
@@ -207,8 +275,32 @@
 
         .login-error {
             color: #ff3333;
-            font-size: 13px;
+            font-size: 12px;
             display: none;
+        }
+
+        /* iOS / Android Home Screen Guide Box */
+        .home-guide-box {
+            background-color: var(--bg-color);
+            border: 1px dashed var(--accent-color);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: right;
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .home-guide-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
 
         /* Header */
@@ -223,10 +315,10 @@
         }
 
         .logo {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--accent-color);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .stats-box {
@@ -261,7 +353,6 @@
             width: 100%;
         }
 
-        /* Video Section & Controls Wrapper */
         .player-section {
             display: flex;
             flex-direction: column;
@@ -306,7 +397,6 @@
             margin-top: 5px;
         }
 
-        /* 10 Seconds Control Buttons */
         .seek-controls {
             display: flex;
             gap: 8px;
@@ -332,7 +422,6 @@
             border-color: var(--accent-color);
         }
 
-        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
             gap: 10px;
@@ -360,7 +449,6 @@
             border-color: var(--accent-color);
         }
 
-        /* Tab Panels */
         .tab-panel {
             display: none;
             background-color: var(--card-bg);
@@ -417,7 +505,6 @@
             border-color: var(--accent-color);
         }
 
-        /* Settings Styles */
         .setting-group {
             display: flex;
             flex-direction: column;
@@ -497,7 +584,15 @@
 </head>
 <body data-theme="dark">
 
-    <div id="lang-overlay">
+    <div id="loading-overlay">
+        <img src="logo.png" alt="Logo" class="loading-logo">
+        <div class="loading-bar-container">
+            <div class="loading-progress" id="loading-progress"></div>
+        </div>
+        <div class="loading-text" id="loading-text">1%</div>
+    </div>
+
+    <div id="lang-overlay" style="display: none;">
         <div class="lang-box">
             <h2 id="lang-title">زمانێ خۆ هەلبژێرە / Select Language</h2>
             <button class="lang-btn" onclick="selectLanguage('badini')">🇭🇺 کوردی بادینی</button>
@@ -509,23 +604,32 @@
 
     <div id="login-overlay">
         <div class="login-box">
-            <h2 id="pwd-title">LEGEND TV - FULL VIP</h2>
-            <p id="pwd-desc">Select VIP Pass or type below:</p>
+            <img src="logo.png" alt="Logo" class="login-logo">
+            <h2 id="pwd-title">LEGEND TV - VIP</h2>
+            <p id="pwd-desc">ئێک ژ ڤان هەلبژێرە یان پاسوۆردێ بنڤیسە:</p>
             
             <div class="quick-pass-container">
                 <button class="quick-pass-btn" onclick="quickLogin('@YUSEEF_SURCHI')">@YUSEEF_SURCHI</button>
                 <button class="quick-pass-btn" onclick="quickLogin('@Arthur3345')">@Arthur3345</button>
             </div>
 
-            <input type="password" id="password-input" class="login-input" placeholder="Password...">
-            <div id="login-error" class="login-error">Incorrect Password!</div>
-            <button class="login-btn" id="login-btn-text" onclick="checkPassword()">Login</button>
-            <button class="back-login-btn" id="back-btn-text" onclick="goBackToLanguage()">⬅️ Back / ڤەڕەگەڕیان</button>
+            <input type="password" id="password-input" class="login-input" placeholder="پاسوۆرد بنڤیسە...">
+            <div id="login-error" class="login-error">پاسوۆرد شاشە!</div>
+            <button class="login-btn" id="login-btn-text" onclick="checkPassword()">ڤەکرن (Login)</button>
+            <button class="back-login-btn" id="back-btn-text" onclick="goBackToLanguage()">⬅️ ڤەگەڕیان بۆ زمانان</button>
+
+            <div class="home-guide-box">
+                <div class="home-guide-title">📱 چەوا سەر شاشەی (Home Screen) زێدەبکەی:</div>
+                <div>1 ل سەفاری (Safari) دابگره دوگمەیا ... <b>Share
+                </b> ل خوارێ كليك بكه.</div>
+                <div>2. پاشان بچه خوارێ و هەلبژێرە: <b>Add to Home Screen ➕</b></div>
+                <div>3. ناڤی تۆمارکە و کلیک ل سەر <b>Add</b> دا ل سەر شاشەیا موبایلا تە بێتە دانان!</div>
+            </div>
         </div>
     </div>
 
     <header>
-        <div class="logo">LEGEND TV - FULL VIP</div>
+        <div class="logo">LEGEND TV</div>
         <div class="stats-box">
             <div class="view-badge" id="view-count-badge">👁️ Views: 1,980</div>
             <div class="time-badge" id="iraq-time">00:00:00</div>
@@ -538,12 +642,12 @@
                 <div id="youtube-player"></div>
                 <div class="tv-placeholder" id="initial-placeholder">
                     <h2 id="screen-welcome">LEGEND TV - Stream</h2>
-                    <p id="screen-sub">Select a channel below</p>
+                    <p id="screen-sub">فەرموو ژ خوارێ کەناڵەکی هەلبژێرە</p>
                 </div>
             </div>
             <div class="seek-controls">
-                <button class="seek-btn" onclick="seekVideo(-10)" id="btn-back">⏪ -10s</button>
-                <button class="seek-btn" onclick="seekVideo(10)" id="btn-forward">+10s ⏩</button>
+                <button class="seek-btn" onclick="seekVideo(-10)" id="btn-back">⏪ -10 چرکە</button>
+                <button class="seek-btn" onclick="seekVideo(10)" id="btn-forward">+10 چرکە ⏩</button>
             </div>
         </div>
 
@@ -553,7 +657,7 @@
         </div>
 
         <div class="tab-panel active" id="panel-tv">
-            <div class="category-title" id="cat-kurdish">Kurdish Channels</div>
+            <div class="category-title" id="cat-kurdish">کەناڵێن کوردی</div>
             <div class="channels-grid">
                 <button class="channel-btn" onclick="playChannel('g82nZcAK3Yo')">Rudaw TV</button>
                 <button class="channel-btn" onclick="playChannel('DZvo1auQMZk')">Zagros TV Arabic</button>
@@ -563,7 +667,7 @@
                 <button class="channel-btn" onclick="playChannel('NskrdSLYirw')">Channel 8</button>
             </div>
 
-            <div class="category-title" id="cat-cartoons">Cartoon Channels</div>
+            <div class="category-title" id="cat-cartoons">کەناڵێن کارتۆن</div>
             <div class="channels-grid">
                 <button class="channel-btn" onclick="playChannel('21hAlnDFTLw')">CN Arabic</button>
                 <button class="channel-btn" onclick="playChannel('88XSnWwboG8')">Teenage Mutant</button>
@@ -575,10 +679,10 @@
         </div>
 
         <div class="tab-panel" id="panel-setting">
-            <div class="category-title" id="set-title">Website Settings</div>
+            <div class="category-title" id="set-title">ڕێکخستنێن سەنتەری</div>
             
             <div class="setting-group">
-                <span class="setting-label" id="theme-label">Theme Mode:</span>
+                <span class="setting-label" id="theme-label">شێوازێ ڕەنگی شاشێ:</span>
                 <div class="theme-selector">
                     <button class="theme-btn" id="light-btn" onclick="setTheme('light')">Light</button>
                     <button class="theme-btn active" id="dark-btn" onclick="setTheme('dark')">Dark</button>
@@ -586,19 +690,47 @@
             </div>
 
             <div class="setting-group" style="margin-top: 10px;">
-                <span class="setting-label" id="social-label">My Social Accounts:</span>
+                <span class="setting-label" id="social-label">Developer & Accounts:</span>
+                
+                <div style="font-size: 13px; font-weight: bold; color: var(--accent-color); margin-top: 4px;">Developer</div>
                 <a href="https://www.tiktok.com/@YUSEEF_SURCHI" target="_blank" class="btn btn-tiktok">JOIN</a>
                 <a href="https://www.snapchat.com/add/k4boos_surchi" target="_blank" class="btn btn-snapchat">JOIN</a>
+                <a href="https://t.me/LEGEND_MODS33" target="_blank" class="btn btn-telegram">JOIN</a>
+
+                <div style="font-size: 13px; font-weight: bold; color: var(--accent-color); margin-top: 8px;">Admin</div>
+                <a href="https://www.tiktok.com/@arthur.slevanay" target="_blank" class="btn btn-tiktok">JOIN</a>
+                <a href="https://www.snapchat.com/add/arthur.slevanay" target="_blank" class="btn btn-snapchat">JOIN</a>
                 <a href="https://t.me/LEGEND_MODS33" target="_blank" class="btn btn-telegram">JOIN</a>
             </div>
         </div>
     </div>
 
     <footer>
-        YUSEEF TV © 2026 | FULL VIP System
+        LEGEND TV © 2026 | Developer: YUSEEF_SURCHI
     </footer>
 
     <script>
+        // Loading animation from 1 to 100 in exactly 1 second (1000ms / 100 steps = 10ms per step)
+        let loadProgress = 1;
+        const progressEl = document.getElementById('loading-progress');
+        const textEl = document.getElementById('loading-text');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const langOverlay = document.getElementById('lang-overlay');
+
+        const loadTimer = setInterval(() => {
+            loadProgress++;
+            progressEl.style.width = loadProgress + '%';
+            textEl.innerText = loadProgress + '%';
+
+            if (loadProgress >= 100) {
+                clearInterval(loadTimer);
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                    langOverlay.style.display = 'flex';
+                }, 200);
+            }
+        }, 10);
+
         let currentLang = 'badini';
         let player;
         let currentViewCount = 1980;
@@ -616,7 +748,7 @@
                 secCartoons: "🧸 کەناڵێن کارتۆن",
                 setTitle: "ڕێکخستنێن سەنتەری",
                 themeLabel: "شێوازێ ڕەنگی شاشێ:",
-                socialLabel: "هەژمارێن من:",
+                socialLabel: "Developer & Accounts:",
                 welcome: "LEGEND TV - Stream",
                 subWelcome: "فەرموو ژ خوارێ کەناڵەکی هەلبژێرە",
                 btnBack: "⏪ -10 چرکە",
@@ -634,8 +766,8 @@
                 secCartoons: "🧸 کەناڵەکانی کارتۆن",
                 setTitle: "ڕێکخستنەکانی وێبسایت",
                 themeLabel: "دۆخی ڕەنگ:",
-                socialLabel: "هەژمارە فەرمییەکان:",
-                welcome: "YUSEEF TV - Stream",
+                socialLabel: "پەرەپێدەر و هەژمارەکان:",
+                welcome: "LEGEND TV - Stream",
                 subWelcome: "تکایە کەناڵێک لە خوارەوە هەڵبژێرە",
                 btnBack: "⏪ -10 چرکە",
                 btnFwd: "+10 چرکە ⏩"
@@ -652,8 +784,8 @@
                 secCartoons: "📺 قنوات الكرتون والأطفال",
                 setTitle: "إعدادات الموقع",
                 themeLabel: "وضع العرض:",
-                socialLabel: "حساباتي الشخصية:",
-                welcome: "YUSEEF TV - Stream",
+                socialLabel: "المطور والحسابات:",
+                welcome: "LEGEND TV - Stream",
                 subWelcome: "اختر قناة من الأسفل",
                 btnBack: "⏪ -10 ثواني",
                 btnFwd: "+10 ثواني ⏩"
@@ -670,7 +802,7 @@
                 secCartoons: "🧸 Cartoon & Kids Channels",
                 setTitle: "Website Settings",
                 themeLabel: "Theme Mode:",
-                socialLabel: "My Social Accounts:",
+                socialLabel: "Developer & Accounts:",
                 welcome: "LEGEND TV - Stream",
                 subWelcome: "Select a channel below",
                 btnBack: "⏪ -10s",

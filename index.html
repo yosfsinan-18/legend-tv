@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl" data-lang="badini">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEGEND TV - FULL VIP PORTAL</title>
+    <style>
+        :root {
+            --bg-color: #0f1016;
+            --text-color: #ffffff;
+            --card-bg: #1a1c24;
+            --accent-color: #e50914;
+            --border-color: #2e3242;
+            --player-bg: #000000;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f4f6f9;
+            --text-color: #222222;
+            --card-bg: #ffffff;
+            --accent-color: #e50914;
+            --border-color: #dcdcdc;
+            --player-bg: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 480px;
+            margin: 0 auto;
+            border-left: 2px solid var(--border-color);
+            border-right: 2px solid var(--border-color);
+            overflow-x: hidden;
+        }
+
+        /* Language Selection Screen */
+        #lang-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .lang-box {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border: 2px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .lang-box h2 {
+            color: var(--accent-color);
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .lang-btn {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.2s;
+        }
+
+        .lang-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Password Screen with Quick Select Buttons */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .login-box {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            border: 2px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .login-box h2 {
+            color: var(--accent-color);
+            font-size: 22px;
+        }
+
+        .login-box p {
+            color: var(--text-color);
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .login-input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .login-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Two Quick Password Buttons */
+        .quick-pass-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .quick-pass-btn {
+            flex: 1;
+            background-color: var(--bg-color);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 10px 5px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .quick-pass-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .back-login-btn {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back-login-btn:hover {
+            background-color: var(--border-color);
+        }
+
+        .login-error {
+            color: #ff3333;
+            font-size: 13px;
+            display: none;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+
+        .stats-box {
+            display: flex;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .time-badge {
+            background: rgba(229, 9, 20, 0.15);
+            padding: 5px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .view-badge {
+            background: rgba(0, 136, 204, 0.15);
+            padding: 5px 8px;
+            border-radius: 12px;
+            border: 1px solid #0088cc;
+            color: #0088cc;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 15px;
+            gap: 15px;
+            width: 100%;
+        }
+
+        /* Video Section & Controls Wrapper */
+        .player-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tv-container {
+            width: 100%;
+            height: 230px;
+            background-color: var(--player-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            border: 2px solid var(--accent-color);
+            position: relative;
+        }
+
+        .tv-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: auto;
+        }
+
+        .tv-placeholder {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .tv-placeholder h2 {
+            font-size: 16px;
+        }
+
+        .tv-placeholder p {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* 10 Seconds Control Buttons */
+        .seek-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .seek-btn {
+            flex: 1;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .seek-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Tab Panels */
+        .tab-panel {
+            display: none;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        .tab-panel.active {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .category-title {
+            font-size: 14px;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 5px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 2px;
+        }
+
+        .channel-btn {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 10px 8px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .channel-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Settings Styles */
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-label {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .theme-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .theme-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s ease;
+        }
+
+        .btn-tiktok {
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid #333;
+        }
+
+        .btn-snapchat {
+            background-color: #fffc00;
+            color: #000000;
+        }
+
+        .btn-telegram {
+            background-color: #0088cc;
+            color: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 12px;
+            background-color: var(--card-bg);
+            font-size: 12px;
+            opacity: 0.8;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body data-theme="dark">
+
+    <div id="lang-overlay">
+        <div class="lang-box">
+            <h2 id="lang-title">زمانێ خۆ هەلبژێرە / Select Language</h2>
+            <button class="lang-btn" onclick="selectLanguage('badini')">🇭🇺 کوردی بادینی</button>
+            <button class="lang-btn" onclick="selectLanguage('sorani')">🇭🇺 کوردی سۆرانی</button>
+            <button class="lang-btn" onclick="selectLanguage('arabic')">🇮🇶 العربية</button>
+            <button class="lang-btn" onclick="selectLanguage('english')">🏴󠁧󠁢󠁥󠁮󠁧󠁿 English</button>
+        </div>
+    </div>
+
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2 id="pwd-title">LEGEND TV - FULL VIP</h2>
+            <p id="pwd-desc">Select VIP Pass or type below:</p>
+            
+            <div class="quick-pass-container">
+                <button class="quick-pass-btn" onclick="quickLogin('@YUSEEF_SURCHI')">@YUSEEF_SURCHI</button>
+                <button class="quick-pass-btn" onclick="quickLogin('@Arthur3345')">@Arthur3345</button>
+            </div>
+
+            <input type="password" id="password-input" class="login-input" placeholder="Password...">
+            <div id="login-error" class="login-error">Incorrect Password!</div>
+            <button class="login-btn" id="login-btn-text" onclick="checkPassword()">Login</button>
+            <button class="back-login-btn" id="back-btn-text" onclick="goBackToLanguage()">⬅️ Back / ڤەڕەگەڕیان</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">LEGEND TV - FULL VIP</div>
+        <div class="stats-box">
+            <div class="view-badge" id="view-count-badge">👁️ Views: 1,980</div>
+            <div class="time-badge" id="iraq-time">00:00:00</div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="player-section">
+            <div class="tv-container">
+                <div id="youtube-player"></div>
+                <div class="tv-placeholder" id="initial-placeholder">
+                    <h2 id="screen-welcome">LEGEND TV - Stream</h2>
+                    <p id="screen-sub">Select a channel below</p>
+                </div>
+            </div>
+            <div class="seek-controls">
+                <button class="seek-btn" onclick="seekVideo(-10)" id="btn-back">⏪ -10s</button>
+                <button class="seek-btn" onclick="seekVideo(10)" id="btn-forward">+10s ⏩</button>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" id="tab-tv-btn" onclick="switchTab('tv')">📺 TV</button>
+            <button class="tab-btn" id="tab-set-btn" onclick="switchTab('setting')">⚙️ SETTINGS</button>
+        </div>
+
+        <div class="tab-panel active" id="panel-tv">
+            <div class="category-title" id="cat-kurdish">Kurdish Channels</div>
+            <div class="channels-grid">
+                <button class="channel-btn" onclick="playChannel('g82nZcAK3Yo')">Rudaw TV</button>
+                <button class="channel-btn" onclick="playChannel('DZvo1auQMZk')">Zagros TV Arabic</button>
+                <button class="channel-btn" onclick="playChannel('SF9MNjuhRII')">NRT TV</button>
+                <button class="channel-btn" onclick="playChannel('O6vXkRjIryo')">Ava Media</button>
+                <button class="channel-btn" onclick="playChannel('yZ7eZ8H_a1I')">K24 TV</button>
+                <button class="channel-btn" onclick="playChannel('NskrdSLYirw')">Channel 8</button>
+            </div>
+
+            <div class="category-title" id="cat-cartoons">Cartoon Channels</div>
+            <div class="channels-grid">
+                <button class="channel-btn" onclick="playChannel('21hAlnDFTLw')">CN Arabic</button>
+                <button class="channel-btn" onclick="playChannel('88XSnWwboG8')">Teenage Mutant</button>
+                <button class="channel-btn" onclick="playChannel('rEKifG2XUZg')">Boomerang UK</button>
+                <button class="channel-btn" onclick="playChannel('osGj6OhUSXI')">Mega Moments</button>
+                <button class="channel-btn" onclick="playChannel('hzSYersnf3I')">Paw Patrol</button>
+                <button class="channel-btn" onclick="playChannel('yzKTO-6KWHU')">Disney Junior</button>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="panel-setting">
+            <div class="category-title" id="set-title">Website Settings</div>
+            
+            <div class="setting-group">
+                <span class="setting-label" id="theme-label">Theme Mode:</span>
+                <div class="theme-selector">
+                    <button class="theme-btn" id="light-btn" onclick="setTheme('light')">Light</button>
+                    <button class="theme-btn active" id="dark-btn" onclick="setTheme('dark')">Dark</button>
+                </div>
+            </div>
+
+            <div class="setting-group" style="margin-top: 10px;">
+                <span class="setting-label" id="social-label">My Social Accounts:</span>
+                <a href="https://www.tiktok.com/@YUSEEF_SURCHI" target="_blank" class="btn btn-tiktok">JOIN</a>
+                <a href="https://www.snapchat.com/add/k4boos_surchi" target="_blank" class="btn btn-snapchat">JOIN</a>
+                <a href="https://t.me/LEGEND_MODS33" target="_blank" class="btn btn-telegram">JOIN</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        YUSEEF TV © 2026 | FULL VIP System
+    </footer>
+
+    <script>
+        let currentLang = 'badini';
+        let player;
+        let currentViewCount = 1980;
+
+        const translations = {
+            badini: {
+                pwdTitle: "LEGEND TV - FULL VIP",
+                pwdDesc: "ئێک ژ ڤان هەلبژێرە یان پاسوۆردێ بنڤیسە:",
+                pwdError: "پاسوۆرد شاشە!",
+                pwdBtn: "ڤەکرن (Login)",
+                backBtn: "⬅️ ڤەڕەگەڕیان بۆ زمانان",
+                tabTv: "📺 کەناڵ (TV)",
+                tabSet: "⚙️ ڕێکخستن (SETTINGS)",
+                secKurdish: "📺 کەناڵێن کوردی",
+                secCartoons: "🧸 کەناڵێن کارتۆن",
+                setTitle: "ڕێکخستنێن سەنتەری",
+                themeLabel: "شێوازێ ڕەنگی شاشێ:",
+                socialLabel: "هەژمارێن من:",
+                welcome: "LEGEND TV - Stream",
+                subWelcome: "فەرموو ژ خوارێ کەناڵەکی هەلبژێرە",
+                btnBack: "⏪ -10 چرکە",
+                btnFwd: "+10 چرکە ⏩"
+            },
+            sorani: {
+                pwdTitle: "LEGEND TV - FULL VIP",
+                pwdDesc: "یەکێک لەم دووانە هەڵبژێرە یان پاسوۆرد بنووسە:",
+                pwdError: "پاسوۆرد هەڵەیە!",
+                pwdBtn: "کردنەوە (Login)",
+                backBtn: "⬅️ گەڕانەوە بۆ زمانەکان",
+                tabTv: "📺 کەناڵ (TV)",
+                tabSet: "⚙️ ڕێکخستن (SETTINGS)",
+                secKurdish: "📺 کەناڵە کوردییەکان",
+                secCartoons: "🧸 کەناڵەکانی کارتۆن",
+                setTitle: "ڕێکخستنەکانی وێبسایت",
+                themeLabel: "دۆخی ڕەنگ:",
+                socialLabel: "هەژمارە فەرمییەکان:",
+                welcome: "YUSEEF TV - Stream",
+                subWelcome: "تکایە کەناڵێک لە خوارەوە هەڵبژێرە",
+                btnBack: "⏪ -10 چرکە",
+                btnFwd: "+10 چرکە ⏩"
+            },
+            arabic: {
+                pwdTitle: "LEGEND TV - FULL VIP",
+                pwdDesc: "اختر أحد الحسابات أو ادخل كلمة المرور:",
+                pwdError: "كلمة المرور خاطئة!",
+                pwdBtn: "دخول (Login)",
+                backBtn: "⬅️ العودة لاختيار اللغات",
+                tabTv: "📺 القنوات (TV)",
+                tabSet: "⚙️ الإعدادات (SETTINGS)",
+                secKurdish: "📺 القنوات الكوردية",
+                secCartoons: "📺 قنوات الكرتون والأطفال",
+                setTitle: "إعدادات الموقع",
+                themeLabel: "وضع العرض:",
+                socialLabel: "حساباتي الشخصية:",
+                welcome: "YUSEEF TV - Stream",
+                subWelcome: "اختر قناة من الأسفل",
+                btnBack: "⏪ -10 ثواني",
+                btnFwd: "+10 ثواني ⏩"
+            },
+            english: {
+                pwdTitle: "LEGEND TV - FULL VIP",
+                pwdDesc: "Select one below or enter password:",
+                pwdError: "Incorrect Password!",
+                pwdBtn: "Login",
+                backBtn: "⬅️ Back to Languages",
+                tabTv: "📺 TV",
+                tabSet: "⚙️ SETTINGS",
+                secKurdish: "📺 Kurdish Channels",
+                secCartoons: "🧸 Cartoon & Kids Channels",
+                setTitle: "Website Settings",
+                themeLabel: "Theme Mode:",
+                socialLabel: "My Social Accounts:",
+                welcome: "LEGEND TV - Stream",
+                subWelcome: "Select a channel below",
+                btnBack: "⏪ -10s",
+                btnFwd: "+10s ⏩"
+            }
+        };
+
+        function selectLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.setAttribute('data-lang', lang);
+            
+            const t = translations[lang];
+            document.getElementById('pwd-title').innerText = t.pwdTitle;
+            document.getElementById('pwd-desc').innerText = t.pwdDesc;
+            document.getElementById('login-error').innerText = t.pwdError;
+            document.getElementById('login-btn-text').innerText = t.pwdBtn;
+            document.getElementById('back-btn-text').innerText = t.backBtn;
+            document.getElementById('tab-tv-btn').innerText = t.tabTv;
+            document.getElementById('tab-set-btn').innerText = t.tabSet;
+            document.getElementById('cat-kurdish').innerText = t.secKurdish;
+            document.getElementById('cat-cartoons').innerText = t.secCartoons;
+            document.getElementById('set-title').innerText = t.setTitle;
+            document.getElementById('theme-label').innerText = t.themeLabel;
+            document.getElementById('social-label').innerText = t.socialLabel;
+            document.getElementById('screen-welcome').innerText = t.welcome;
+            document.getElementById('screen-sub').innerText = t.subWelcome;
+            document.getElementById('btn-back').innerText = t.btnBack;
+            document.getElementById('btn-forward').innerText = t.btnFwd;
+
+            document.getElementById('lang-overlay').style.display = 'none';
+            document.getElementById('login-overlay').style.display = 'flex';
+        }
+
+        function quickLogin(pass) {
+            document.getElementById('password-input').value = pass;
+            checkPassword();
+        }
+
+        function goBackToLanguage() {
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('lang-overlay').style.display = 'flex';
+        }
+
+        function checkPassword() {
+            const passInput = document.getElementById('password-input').value.trim();
+            const errorMsg = document.getElementById('login-error');
+            
+            if (passInput === "@YUSEEF_SURCHI" || passInput === "@Arthur3345") {
+                document.getElementById('login-overlay').style.display = 'none';
+                errorMsg.style.display = 'none';
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function switchTab(tabName) {
+            const btnTv = document.getElementById('tab-tv-btn');
+            const btnSetting = document.getElementById('tab-set-btn');
+            const panelTv = document.getElementById('panel-tv');
+            const panelSetting = document.getElementById('panel-setting');
+
+            if (tabName === 'tv') {
+                btnTv.classList.add('active');
+                btnSetting.classList.remove('active');
+                panelTv.classList.add('active');
+                panelSetting.classList.remove('active');
+            } else {
+                btnSetting.classList.add('active');
+                btnTv.classList.remove('active');
+                panelSetting.classList.add('active');
+                panelTv.classList.remove('active');
+            }
+        }
+
+        function onYouTubeIframeAPIReady() {}
+
+        function playChannel(videoId) {
+            const placeholder = document.getElementById('initial-placeholder');
+            if (placeholder) {
+                placeholder.style.display = 'none';
+            }
+
+            currentViewCount += Math.floor(Math.random() * 3) + 1;
+            document.getElementById('view-count-badge').innerText = `👁️ Views: ${currentViewCount.toLocaleString()}`;
+
+            if (!player) {
+                player = new YT.Player('youtube-player', {
+                    height: '100%',
+                    width: '100%',
+                    videoId: videoId,
+                    playerVars: {
+                        'autoplay': 1,
+                        'modestbranding': 1,
+                        'rel': 0,
+                        'iv_load_policy': 3,
+                        'controls': 1,
+                        'enablejsapi': 1
+                    },
+                    events: {
+                        'onReady': (event) => {
+                            event.target.playVideo();
+                        }
+                    }
+                });
+            } else {
+                player.loadVideoById(videoId);
+            }
+        }
+
+        function seekVideo(seconds) {
+            if (player && typeof player.getCurrentTime === 'function' && typeof player.seekTo === 'function') {
+                const currentTime = player.getCurrentTime();
+                const newTime = Math.max(0, currentTime + seconds);
+                player.seekTo(newTime, true);
+            }
+        }
+
+        function setTheme(mode) {
+            const body = document.body;
+            const lightBtn = document.getElementById('light-btn');
+            const darkBtn = document.getElementById('dark-btn');
+
+            body.setAttribute('data-theme', mode);
+
+            if (mode === 'light') {
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+            } else {
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+            }
+        }
+
+        function updateIraqTime() {
+            const options = {
+                timeZone: 'Asia/Baghdad',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const formatter = new Intl.DateTimeFormat([], options);
+            const timeString = formatter.format(new Date());
+            document.getElementById('iraq-time').innerText = timeString;
+        }
+
+        setInterval(updateIraqTime, 1000);
+        updateIraqTime();
+    </script>
+</body>
+</html>

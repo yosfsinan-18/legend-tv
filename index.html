@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEGEND TV</title>
+    <title>LEGEND TV - ROOM VIP</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <style>
@@ -46,7 +46,7 @@
             overflow-x: hidden;
         }
 
-        /* Loading Screen Overlay */
+        /* Loading Screen */
         #loading-overlay {
             position: fixed;
             top: 0;
@@ -101,7 +101,7 @@
             letter-spacing: 1px;
         }
 
-        /* Language Selection Screen */
+        /* Language Screen */
         #lang-overlay {
             position: fixed;
             top: 0;
@@ -150,7 +150,6 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: 0.2s;
         }
 
         .lang-btn:hover {
@@ -159,8 +158,8 @@
             border-color: var(--accent-color);
         }
 
-        /* Password Screen with Logo & Home Screen Guide */
-        #login-overlay {
+        /* Auth Screen (Sign Up & Login) */
+        #auth-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -175,7 +174,7 @@
             overflow-y: auto;
         }
 
-        .login-box {
+        .auth-box {
             background-color: var(--card-bg);
             padding: 20px;
             border-radius: 16px;
@@ -190,28 +189,45 @@
             margin: auto;
         }
 
-        .login-logo {
+        .auth-logo {
             width: 65px;
             height: 65px;
             border-radius: 15px;
             object-fit: cover;
             margin: 0 auto;
             border: 2px solid var(--accent-color);
-            box-shadow: 0 4px 10px rgba(229,9,20,0.3);
         }
 
-        .login-box h2 {
+        .auth-box h2 {
             color: var(--accent-color);
             font-size: 19px;
         }
 
-        .login-box p {
-            color: var(--text-color);
-            font-size: 12px;
-            opacity: 0.9;
+        .auth-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
         }
 
-        .login-input {
+        .auth-tab-btn {
+            flex: 1;
+            padding: 8px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .auth-tab-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .auth-input {
             padding: 10px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -219,9 +235,10 @@
             color: var(--text-color);
             font-size: 14px;
             text-align: center;
+            width: 100%;
         }
 
-        .login-btn {
+        .auth-btn {
             background-color: var(--accent-color);
             color: white;
             border: none;
@@ -230,32 +247,13 @@
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
+            width: 100%;
         }
 
-        .quick-pass-container {
-            display: flex;
-            gap: 6px;
-        }
-
-        .quick-pass-btn {
-            flex: 1;
-            background-color: var(--bg-color);
-            color: var(--accent-color);
-            border: 1px solid var(--accent-color);
-            padding: 8px 4px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .quick-pass-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
+        .auth-error {
+            color: #ff3333;
+            font-size: 12px;
+            display: none;
         }
 
         .back-login-btn {
@@ -267,19 +265,9 @@
             font-size: 12px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 5px;
         }
 
-        .back-login-btn:hover {
-            background-color: var(--border-color);
-        }
-
-        .login-error {
-            color: #ff3333;
-            font-size: 12px;
-            display: none;
-        }
-
-        /* iOS / Android Home Screen Guide Box */
         .home-guide-box {
             background-color: var(--bg-color);
             border: 1px dashed var(--accent-color);
@@ -318,7 +306,6 @@
             font-size: 16px;
             font-weight: bold;
             color: var(--accent-color);
-            letter-spacing: 0.5px;
         }
 
         .stats-box {
@@ -375,26 +362,16 @@
             position: relative;
         }
 
-        .tv-container iframe {
+        .tv-container iframe, .tv-container video {
             width: 100%;
             height: 100%;
             border: none;
-            pointer-events: auto;
+            object-fit: cover;
         }
 
         .tv-placeholder {
             text-align: center;
             padding: 15px;
-        }
-
-        .tv-placeholder h2 {
-            font-size: 16px;
-        }
-
-        .tv-placeholder p {
-            font-size: 12px;
-            opacity: 0.8;
-            margin-top: 5px;
         }
 
         .seek-controls {
@@ -413,7 +390,6 @@
             font-weight: bold;
             cursor: pointer;
             text-align: center;
-            transition: 0.2s;
         }
 
         .seek-btn:hover {
@@ -422,9 +398,10 @@
             border-color: var(--accent-color);
         }
 
+        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
-            gap: 10px;
+            gap: 6px;
             width: 100%;
         }
 
@@ -433,13 +410,12 @@
             background-color: var(--card-bg);
             color: var(--text-color);
             border: 2px solid var(--border-color);
-            padding: 12px;
+            padding: 10px 4px;
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transition: 0.2s;
         }
 
@@ -470,7 +446,6 @@
             color: var(--accent-color);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 5px;
-            margin-top: 5px;
             font-weight: bold;
         }
 
@@ -493,7 +468,6 @@
             cursor: pointer;
             font-size: 12px;
             font-weight: bold;
-            transition: 0.2s;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -505,6 +479,110 @@
             border-color: var(--accent-color);
         }
 
+        /* ROOM VIP STYLES */
+        .room-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .room-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .room-input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .room-action-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .room-danger-btn {
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+        }
+
+        .room-active-panel {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .room-info-badge {
+            background: rgba(229, 9, 20, 0.1);
+            border: 1px solid var(--accent-color);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-container {
+            height: 140px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 12px;
+            text-align: right;
+        }
+
+        .chat-msg {
+            background: var(--card-bg);
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chat-input-box {
+            display: flex;
+            gap: 6px;
+        }
+
+        .mic-btn {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Settings Panel */
         .setting-group {
             display: flex;
             flex-direction: column;
@@ -552,24 +630,11 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            transition: 0.2s ease;
         }
 
-        .btn-tiktok {
-            background-color: #000000;
-            color: #ffffff;
-            border: 1px solid #333;
-        }
-
-        .btn-snapchat {
-            background-color: #fffc00;
-            color: #000000;
-        }
-
-        .btn-telegram {
-            background-color: #0088cc;
-            color: #ffffff;
-        }
+        .btn-tiktok { background-color: #000; color: #fff; border: 1px solid #333; }
+        .btn-snapchat { background-color: #fffc00; color: #000; }
+        .btn-telegram { background-color: #0088cc; color: #fff; }
 
         footer {
             text-align: center;
@@ -602,28 +667,33 @@
         </div>
     </div>
 
-    <div id="login-overlay">
-        <div class="login-box">
-            <img src="logo.png" alt="Logo" class="login-logo">
-            <h2 id="pwd-title">LEGEND TV - VIP</h2>
-            <p id="pwd-desc">ئێک ژ ڤان هەلبژێرە یان پاسوۆردێ بنڤیسە:</p>
+    <!-- Sign Up & Login Overlay -->
+    <div id="auth-overlay">
+        <div class="auth-box">
+            <img src="logo.png" alt="Logo" class="auth-logo">
+            <h2 id="auth-main-title">LEGEND TV - VIP</h2>
             
-            <div class="quick-pass-container">
-                <button class="quick-pass-btn" onclick="quickLogin('@YUSEEF_SURCHI')">@YUSEEF_SURCHI</button>
-                <button class="quick-pass-btn" onclick="quickLogin('@Arthur3345')">@Arthur3345</button>
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="tab-login-mode" onclick="switchAuthMode('login')">Login</button>
+                <button class="auth-tab-btn" id="tab-signup-mode" onclick="switchAuthMode('signup')">Sign Up</button>
             </div>
 
-            <input type="password" id="password-input" class="login-input" placeholder="پاسوۆرد بنڤیسە...">
-            <div id="login-error" class="login-error">پاسوۆرد شاشە!</div>
-            <button class="login-btn" id="login-btn-text" onclick="checkPassword()">ڤەکرن (Login)</button>
-            <button class="back-login-btn" id="back-btn-text" onclick="goBackToLanguage()">⬅️ ڤەگەڕیان بۆ زمانان</button>
+            <div id="signup-fields" style="display: none; flex-direction: column; gap: 8px;">
+                <input type="text" id="signup-name" class="auth-input" placeholder="ناڤێ تە (Full Name)...">
+            </div>
+
+            <input type="text" id="auth-username" class="auth-input" placeholder="يوزەرنەڤیس (Username)...">
+            <input type="password" id="auth-password" class="auth-input" placeholder="پاسوۆرد (Password)...">
+            
+            <div id="auth-error" class="auth-error">خەلەتی هەەیە د زانیاریان دا!</div>
+            <button class="auth-btn" id="auth-submit-btn" onclick="handleAuthSubmit()">چوونا ژوورڤە (Login)</button>
+            <button class="back-login-btn" onclick="goBackToLanguage()">⬅️ ڤەڕەگەڕیان بۆ زمانان</button>
 
             <div class="home-guide-box">
                 <div class="home-guide-title">📱 چەوا سەر شاشەی (Home Screen) زێدەبکەی:</div>
-                <div>1 ل سەفاری (Safari) دابگره دوگمەیا ... <b>Share
-                </b> ل خوارێ كليك بكه.</div>
-                <div>2. پاشان بچه خوارێ و هەلبژێرە: <b>Add to Home Screen ➕</b></div>
-                <div>3. ناڤی تۆمارکە و کلیک ل سەر <b>Add</b> دا ل سەر شاشەیا موبایلا تە بێتە دانان!</div>
+                <div>1. ل سەکاری (Safari) یا ئایفۆنی، دوگمەیا <b>Share ⎋</b> بگوڤوشە.</div>
+                <div>2. پاشان بجهة خوارێ و هەلبژێرە: <b>Add to Home Screen ➕</b>.</div>
+                <div>3. ناڤی تۆمارکە و بکلیکە ل سەر <b>Add</b> دا ل سەر شاشەیا موبایلا تە بێتە دانان!</div>
             </div>
         </div>
     </div>
@@ -638,7 +708,7 @@
 
     <div class="main-container">
         <div class="player-section">
-            <div class="tv-container">
+            <div class="tv-container" id="main-player-wrapper">
                 <div id="youtube-player"></div>
                 <div class="tv-placeholder" id="initial-placeholder">
                     <h2 id="screen-welcome">LEGEND TV - Stream</h2>
@@ -653,6 +723,7 @@
 
         <div class="nav-tabs">
             <button class="tab-btn active" id="tab-tv-btn" onclick="switchTab('tv')">📺 TV</button>
+            <button class="tab-btn" id="tab-room-btn" onclick="switchTab('room')">💬 ROOM VIP</button>
             <button class="tab-btn" id="tab-set-btn" onclick="switchTab('setting')">⚙️ SETTINGS</button>
         </div>
 
@@ -675,6 +746,46 @@
                 <button class="channel-btn" onclick="playChannel('osGj6OhUSXI')">Mega Moments</button>
                 <button class="channel-btn" onclick="playChannel('hzSYersnf3I')">Paw Patrol</button>
                 <button class="channel-btn" onclick="playChannel('yzKTO-6KWHU')">Disney Junior</button>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="panel-room">
+            <div class="category-title">FULL VIP ROOM (Custom Players & Chat)</div>
+            
+            <div class="room-box" id="room-join-box">
+                <div style="font-size: 12px; opacity: 0.9;">ژوورەکێ چێکە، یان ID ژوورێ (6 ڕاغمی) بنڤیسە دا پشکدار ببی!</div>
+                <button class="room-action-btn" onclick="createNewRoom()">✨ ژوورەکا نوو چێکە (Create Room)</button>
+                
+                <div class="room-controls" style="margin-top: 5px;">
+                    <input type="text" id="room-id-input" class="room-input" placeholder="ID ژوورا 6 ڕاغمی بنڤیسە..." maxlength="6">
+                    <button class="room-action-btn" onclick="joinRoom()">Join Room</button>
+                </div>
+            </div>
+
+            <div class="room-active-panel" id="room-active-box">
+                <div class="room-info-badge" id="active-room-display">
+                    <span id="room-id-text">Room ID: 123456</span>
+                    <button class="room-danger-btn" id="delete-room-btn" onclick="deleteRoom()">❌ Delete Room (Owner Only)</button>
+                </div>
+                
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="custom-video-link" class="room-input" placeholder="لينكێ ڤیدیۆیێ (YouTube, Direct Link)...">
+                    <button class="room-action-btn" onclick="playCustomVideoLink()">Play Link</button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
+                    <span>📁 ڤیدیۆیا موبایلێ بارکە (Custom Players):</span>
+                    <input type="file" id="local-video-file" accept="video/*" style="font-size: 11px; flex: 1;" onchange="uploadLocalVideo(event)">
+                </div>
+
+                <div class="chat-container" id="room-chat-messages">
+                    <div class="chat-msg"><b>System:</b> خوش هاتن بۆ ژوورا VIP! ل ڤێرە دشێن فیلم و ڤیدیۆیان ب پێکڤەیی تەماشە بکەن.</div>
+                </div>
+
+                <div class="chat-input-box">
+                    <input type="text" id="chat-msg-input" class="room-input" placeholder="پەیاما خۆ ل ڤێرە بنڤیسە..." onkeypress="handleChatKey(event)">
+                    <button class="room-action-btn" onclick="sendChatMessage()">ناردن</button>
+                    <button class="mic-btn" id="mic-toggle-btn" onclick="toggleMic()">🎤 Mic: Off</button>
+                </div>
             </div>
         </div>
 
@@ -710,12 +821,13 @@
     </footer>
 
     <script>
-        // Loading animation from 1 to 100 in exactly 1 second (1000ms / 100 steps = 10ms per step)
+        // Loading animation
         let loadProgress = 1;
         const progressEl = document.getElementById('loading-progress');
         const textEl = document.getElementById('loading-text');
         const loadingOverlay = document.getElementById('loading-overlay');
         const langOverlay = document.getElementById('lang-overlay');
+        const authOverlay = document.getElementById('auth-overlay');
 
         const loadTimer = setInterval(() => {
             loadProgress++;
@@ -726,190 +838,269 @@
                 clearInterval(loadTimer);
                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
-                    langOverlay.style.display = 'flex';
+                    const savedUser = localStorage.getItem('legend_logged_user');
+                    if (savedUser) {
+                        authOverlay.style.display = 'none';
+                    } else {
+                        langOverlay.style.display = 'flex';
+                    }
                 }, 200);
             }
         }, 10);
 
         let currentLang = 'badini';
+        let authMode = 'login';
         let player;
         let currentViewCount = 1980;
-
-        const translations = {
-            badini: {
-                pwdTitle: "LEGEND TV - FULL VIP",
-                pwdDesc: "ئێک ژ ڤان هەلبژێرە یان پاسوۆردێ بنڤیسە:",
-                pwdError: "پاسوۆرد شاشە!",
-                pwdBtn: "ڤەکرن (Login)",
-                backBtn: "⬅️ ڤەڕەگەڕیان بۆ زمانان",
-                tabTv: "📺 کەناڵ (TV)",
-                tabSet: "⚙️ ڕێکخستن (SETTINGS)",
-                secKurdish: "📺 کەناڵێن کوردی",
-                secCartoons: "🧸 کەناڵێن کارتۆن",
-                setTitle: "ڕێکخستنێن سەنتەری",
-                themeLabel: "شێوازێ ڕەنگی شاشێ:",
-                socialLabel: "Developer & Accounts:",
-                welcome: "LEGEND TV - Stream",
-                subWelcome: "فەرموو ژ خوارێ کەناڵەکی هەلبژێرە",
-                btnBack: "⏪ -10 چرکە",
-                btnFwd: "+10 چرکە ⏩"
-            },
-            sorani: {
-                pwdTitle: "LEGEND TV - FULL VIP",
-                pwdDesc: "یەکێک لەم دووانە هەڵبژێرە یان پاسوۆرد بنووسە:",
-                pwdError: "پاسوۆرد هەڵەیە!",
-                pwdBtn: "کردنەوە (Login)",
-                backBtn: "⬅️ گەڕانەوە بۆ زمانەکان",
-                tabTv: "📺 کەناڵ (TV)",
-                tabSet: "⚙️ ڕێکخستن (SETTINGS)",
-                secKurdish: "📺 کەناڵە کوردییەکان",
-                secCartoons: "🧸 کەناڵەکانی کارتۆن",
-                setTitle: "ڕێکخستنەکانی وێبسایت",
-                themeLabel: "دۆخی ڕەنگ:",
-                socialLabel: "پەرەپێدەر و هەژمارەکان:",
-                welcome: "LEGEND TV - Stream",
-                subWelcome: "تکایە کەناڵێک لە خوارەوە هەڵبژێرە",
-                btnBack: "⏪ -10 چرکە",
-                btnFwd: "+10 چرکە ⏩"
-            },
-            arabic: {
-                pwdTitle: "LEGEND TV - FULL VIP",
-                pwdDesc: "اختر أحد الحسابات أو ادخل كلمة المرور:",
-                pwdError: "كلمة المرور خاطئة!",
-                pwdBtn: "دخول (Login)",
-                backBtn: "⬅️ العودة لاختيار اللغات",
-                tabTv: "📺 القنوات (TV)",
-                tabSet: "⚙️ الإعدادات (SETTINGS)",
-                secKurdish: "📺 القنوات الكوردية",
-                secCartoons: "📺 قنوات الكرتون والأطفال",
-                setTitle: "إعدادات الموقع",
-                themeLabel: "وضع العرض:",
-                socialLabel: "المطور والحسابات:",
-                welcome: "LEGEND TV - Stream",
-                subWelcome: "اختر قناة من الأسفل",
-                btnBack: "⏪ -10 ثواني",
-                btnFwd: "+10 ثواني ⏩"
-            },
-            english: {
-                pwdTitle: "LEGEND TV - FULL VIP",
-                pwdDesc: "Select one below or enter password:",
-                pwdError: "Incorrect Password!",
-                pwdBtn: "Login",
-                backBtn: "⬅️ Back to Languages",
-                tabTv: "📺 TV",
-                tabSet: "⚙️ SETTINGS",
-                secKurdish: "📺 Kurdish Channels",
-                secCartoons: "🧸 Cartoon & Kids Channels",
-                setTitle: "Website Settings",
-                themeLabel: "Theme Mode:",
-                socialLabel: "Developer & Accounts:",
-                welcome: "LEGEND TV - Stream",
-                subWelcome: "Select a channel below",
-                btnBack: "⏪ -10s",
-                btnFwd: "+10s ⏩"
-            }
-        };
+        let micActive = false;
+        let currentRoomId = null;
+        let roomOwner = null;
 
         function selectLanguage(lang) {
             currentLang = lang;
             document.documentElement.setAttribute('data-lang', lang);
-            
-            const t = translations[lang];
-            document.getElementById('pwd-title').innerText = t.pwdTitle;
-            document.getElementById('pwd-desc').innerText = t.pwdDesc;
-            document.getElementById('login-error').innerText = t.pwdError;
-            document.getElementById('login-btn-text').innerText = t.pwdBtn;
-            document.getElementById('back-btn-text').innerText = t.backBtn;
-            document.getElementById('tab-tv-btn').innerText = t.tabTv;
-            document.getElementById('tab-set-btn').innerText = t.tabSet;
-            document.getElementById('cat-kurdish').innerText = t.secKurdish;
-            document.getElementById('cat-cartoons').innerText = t.secCartoons;
-            document.getElementById('set-title').innerText = t.setTitle;
-            document.getElementById('theme-label').innerText = t.themeLabel;
-            document.getElementById('social-label').innerText = t.socialLabel;
-            document.getElementById('screen-welcome').innerText = t.welcome;
-            document.getElementById('screen-sub').innerText = t.subWelcome;
-            document.getElementById('btn-back').innerText = t.btnBack;
-            document.getElementById('btn-forward').innerText = t.btnFwd;
-
             document.getElementById('lang-overlay').style.display = 'none';
-            document.getElementById('login-overlay').style.display = 'flex';
+            authOverlay.style.display = 'flex';
         }
 
-        function quickLogin(pass) {
-            document.getElementById('password-input').value = pass;
-            checkPassword();
+        function switchAuthMode(mode) {
+            authMode = mode;
+            const loginBtn = document.getElementById('tab-login-mode');
+            const signupBtn = document.getElementById('tab-signup-mode');
+            const signupFields = document.getElementById('signup-fields');
+            const submitBtn = document.getElementById('auth-submit-btn');
+
+            if (mode === 'login') {
+                loginBtn.classList.add('active');
+                signupBtn.classList.remove('active');
+                signupFields.style.display = 'none';
+                submitBtn.innerText = "چوونا ژوورڤە (Login)";
+            } else {
+                signupBtn.classList.add('active');
+                loginBtn.classList.remove('active');
+                signupFields.style.display = 'flex';
+                submitBtn.innerText = "تۆمارکرن (Sign Up)";
+            }
         }
 
         function goBackToLanguage() {
-            document.getElementById('login-overlay').style.display = 'none';
-            document.getElementById('lang-overlay').style.display = 'flex';
+            authOverlay.style.display = 'none';
+            langOverlay.style.display = 'flex';
         }
 
-        function checkPassword() {
-            const passInput = document.getElementById('password-input').value.trim();
-            const errorMsg = document.getElementById('login-error');
-            
-            if (passInput === "@YUSEEF_SURCHI" || passInput === "@Arthur3345") {
-                document.getElementById('login-overlay').style.display = 'none';
-                errorMsg.style.display = 'none';
+        function handleAuthSubmit() {
+            const username = document.getElementById('auth-username').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+            const errorEl = document.getElementById('auth-error');
+
+            if (!username || !password) {
+                errorEl.innerText = "تکایە هەمی جهـ پڕ بکە!";
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            if (authMode === 'signup') {
+                const fullName = document.getElementById('signup-name').value.trim();
+                if (!fullName) {
+                    errorEl.innerText = "ناڤێ تە یێ تەمام نەدایە!";
+                    errorEl.style.display = 'block';
+                    return;
+                }
+                const userData = { fullName, username, password };
+                localStorage.setItem('legend_user_' + username, JSON.stringify(userData));
+                localStorage.setItem('legend_logged_user', username);
+                
+                authOverlay.style.display = 'none';
+                errorEl.style.display = 'none';
             } else {
-                errorMsg.style.display = 'block';
+                const savedDataStr = localStorage.getItem('legend_user_' + username);
+                if ((savedDataStr && JSON.parse(savedDataStr).password === password) || (username === '@YUSEEF_SURCHI' && password === '@YUSEEF_SURCHI') || (username === '@Arthur3345' && password === '@Arthur3345')) {
+                    localStorage.setItem('legend_logged_user', username);
+                    authOverlay.style.display = 'none';
+                    errorEl.style.display = 'none';
+                } else {
+                    errorEl.innerText = "يوزەر یان پاسوۆرد شاشە!";
+                    errorEl.style.display = 'block';
+                }
             }
         }
 
         function switchTab(tabName) {
             const btnTv = document.getElementById('tab-tv-btn');
+            const btnRoom = document.getElementById('tab-room-btn');
             const btnSetting = document.getElementById('tab-set-btn');
+            
             const panelTv = document.getElementById('panel-tv');
+            const panelRoom = document.getElementById('panel-room');
             const panelSetting = document.getElementById('panel-setting');
+
+            btnTv.classList.remove('active');
+            btnRoom.classList.remove('active');
+            btnSetting.classList.remove('active');
+
+            panelTv.classList.remove('active');
+            panelRoom.classList.remove('active');
+            panelSetting.classList.remove('active');
 
             if (tabName === 'tv') {
                 btnTv.classList.add('active');
-                btnSetting.classList.remove('active');
                 panelTv.classList.add('active');
-                panelSetting.classList.remove('active');
+            } else if (tabName === 'room') {
+                btnRoom.classList.add('active');
+                panelRoom.classList.add('active');
             } else {
                 btnSetting.classList.add('active');
-                btnTv.classList.remove('active');
                 panelSetting.classList.add('active');
-                panelTv.classList.remove('active');
+            }
+        }
+
+        // ROOM VIP Functions with Owner & Delete Logic
+        function createNewRoom() {
+            const randomId = Math.floor(100000 + Math.random() * 900000);
+            const currentUser = localStorage.getItem('legend_logged_user') || 'Owner';
+            roomOwner = currentUser;
+            currentRoomId = randomId;
+            activateRoom(randomId, true);
+        }
+
+        function joinRoom() {
+            const roomId = document.getElementById('room-id-input').value.trim();
+            if (roomId.length === 6) {
+                const currentUser = localStorage.getItem('legend_logged_user') || 'User';
+                // پشکنین کو ئایا ئەڤ بەکارهێنەرە خۆدانێ ژوورێیە یان نا (یان ژوورەکی بێ خودان بیت)
+                if (!roomOwner) {
+                    roomOwner = currentUser; // ئەگەر کەسەک پشكداری ژوورەکێ ببێت کو خودان نەبیت دێ بێتە خودان
+                }
+                currentRoomId = roomId;
+                const isOwner = (currentUser === roomOwner);
+                activateRoom(roomId, isOwner);
+            } else {
+                alert("تکایە ژمارەیا ID یا 6 ڕاغمی بنڤیسە!");
+            }
+        }
+
+        function activateRoom(id, isOwner) {
+            document.getElementById('room-join-box').style.display = 'none';
+            document.getElementById('room-active-box').style.display = 'flex';
+            document.getElementById('room-id-text').innerText = `Room ID: ${id} | Owner: ${roomOwner}`;
+            
+            const deleteBtn = document.getElementById('delete-room-btn');
+            if (isOwner) {
+                deleteBtn.style.display = 'inline-block';
+            } else {
+                deleteBtn.style.display = 'none';
+            }
+        }
+
+        function deleteRoom() {
+            const currentUser = localStorage.getItem('legend_logged_user') || 'User';
+            if (currentUser === roomOwner) {
+                if (confirm("تە ئەڤە دڤێت ژوورێ ژناڤ ببی (Delete Room)؟")) {
+                    currentRoomId = null;
+                    roomOwner = null;
+                    document.getElementById('room-active-box').style.display = 'none';
+                    document.getElementById('room-join-box').style.display = 'flex';
+                    document.getElementById('room-id-input').value = '';
+                    alert("ژوور ب سەرکەفتیانە هاتە ژناڤبرن!");
+                }
+            } else {
+                alert("تە دەستهەلات نینە! تنێ خودانێ ژوورێ (Owner) دشێت ژوورێ ژناڤ ببات.");
+            }
+        }
+
+        // Custom Player for Links & Uploads in Room
+        function playCustomVideoLink() {
+            const link = document.getElementById('custom-video-link').value.trim();
+            if (!link) return;
+
+            const wrapper = document.getElementById('main-player-wrapper');
+            if (link.includes('youtube.com') || link.includes('youtu.be')) {
+                let videoId = '';
+                if (link.includes('youtu.be/')) {
+                    videoId = link.split('youtu.be/')[1].split('?')[0];
+                } else {
+                    const urlParams = new URLSearchParams(new URL(link).search);
+                    videoId = urlParams.get('v');
+                }
+                if (videoId) {
+                    playChannel(videoId);
+                }
+            } else {
+                wrapper.innerHTML = `<video src="${link}" controls autoplay style="width:100%; height:100%;"></video>`;
+            }
+        }
+
+        function uploadLocalVideo(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const videoURL = URL.createObjectURL(file);
+                const wrapper = document.getElementById('main-player-wrapper');
+                wrapper.innerHTML = `<video src="${videoURL}" controls autoplay style="width:100%; height:100%;"></video>`;
+            }
+        }
+
+        // Chat & Mic Functions
+        function sendChatMessage() {
+            const input = document.getElementById('chat-msg-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const currentUser = localStorage.getItem('legend_logged_user') || 'User';
+            const chatContainer = document.getElementById('room-chat-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-msg';
+            msgDiv.innerHTML = `<b>${currentUser}:</b> ${text}`;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            input.value = '';
+        }
+
+        function handleChatKey(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function toggleMic() {
+            micActive = !micActive;
+            const btn = document.getElementById('mic-toggle-btn');
+            if (micActive) {
+                btn.style.backgroundColor = '#28a745';
+                btn.innerText = "🎤 Mic: On";
+                alert("مایکرۆفۆنا تە یا دەنگێ هاتییە ڤەکرن (Voice Active)");
+            } else {
+                btn.style.backgroundColor = '#0088cc';
+                btn.innerText = "🎤 Mic: Off";
             }
         }
 
         function onYouTubeIframeAPIReady() {}
 
         function playChannel(videoId) {
-            const placeholder = document.getElementById('initial-placeholder');
-            if (placeholder) {
-                placeholder.style.display = 'none';
-            }
+            const wrapper = document.getElementById('main-player-wrapper');
+            wrapper.innerHTML = `<div id="youtube-player" style="width:100%; height:100%;"></div>`;
 
             currentViewCount += Math.floor(Math.random() * 3) + 1;
             document.getElementById('view-count-badge').innerText = `👁️ Views: ${currentViewCount.toLocaleString()}`;
 
-            if (!player) {
-                player = new YT.Player('youtube-player', {
-                    height: '100%',
-                    width: '100%',
-                    videoId: videoId,
-                    playerVars: {
-                        'autoplay': 1,
-                        'modestbranding': 1,
-                        'rel': 0,
-                        'iv_load_policy': 3,
-                        'controls': 1,
-                        'enablejsapi': 1
-                    },
-                    events: {
-                        'onReady': (event) => {
-                            event.target.playVideo();
-                        }
+            player = new YT.Player('youtube-player', {
+                height: '100%',
+                width: '100%',
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 1,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'iv_load_policy': 3,
+                    'controls': 1,
+                    'enablejsapi': 1
+                },
+                events: {
+                    'onReady': (event) => {
+                        event.target.playVideo();
                     }
-                });
-            } else {
-                player.loadVideoById(videoId);
-            }
+                }
+            });
         }
 
         function seekVideo(seconds) {
@@ -924,9 +1115,7 @@
             const body = document.body;
             const lightBtn = document.getElementById('light-btn');
             const darkBtn = document.getElementById('dark-btn');
-
             body.setAttribute('data-theme', mode);
-
             if (mode === 'light') {
                 lightBtn.classList.add('active');
                 darkBtn.classList.remove('active');
@@ -945,8 +1134,7 @@
                 hour12: false
             };
             const formatter = new Intl.DateTimeFormat([], options);
-            const timeString = formatter.format(new Date());
-            document.getElementById('iraq-time').innerText = timeString;
+            document.getElementById('iraq-time').innerText = formatter.format(new Date());
         }
 
         setInterval(updateIraqTime, 1000);

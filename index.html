@@ -46,7 +46,6 @@
             overflow-x: hidden;
         }
 
-        /* Loading Screen */
         #loading-overlay {
             position: fixed;
             top: 0;
@@ -101,7 +100,6 @@
             letter-spacing: 1px;
         }
 
-        /* Language Screen */
         #lang-overlay {
             position: fixed;
             top: 0;
@@ -158,7 +156,6 @@
             border-color: var(--accent-color);
         }
 
-        /* Auth Screen (Sign Up & Login) */
         #auth-overlay {
             position: fixed;
             top: 0;
@@ -291,7 +288,6 @@
             gap: 5px;
         }
 
-        /* Header */
         header {
             display: flex;
             justify-content: space-between;
@@ -330,7 +326,6 @@
             color: #0088cc;
         }
 
-        /* Main Container */
         .main-container {
             display: flex;
             flex-direction: column;
@@ -398,21 +393,23 @@
             border-color: var(--accent-color);
         }
 
-        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             width: 100%;
+            overflow-x: auto;
+            padding-bottom: 2px;
         }
 
         .tab-btn {
             flex: 1;
+            min-width: 65px;
             background-color: var(--card-bg);
             color: var(--text-color);
             border: 2px solid var(--border-color);
-            padding: 10px 4px;
+            padding: 8px 2px;
             border-radius: 10px;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
             text-align: center;
@@ -479,7 +476,6 @@
             border-color: var(--accent-color);
         }
 
-        /* ROOM VIP STYLES */
         .room-box {
             display: flex;
             flex-direction: column;
@@ -534,12 +530,17 @@
         .room-info-badge {
             background: rgba(229, 9, 20, 0.1);
             border: 1px solid var(--accent-color);
-            padding: 8px;
+            padding: 10px;
             border-radius: 8px;
             font-size: 12px;
-            text-align: center;
             font-weight: bold;
             color: var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .room-info-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -564,6 +565,9 @@
             padding: 6px 10px;
             border-radius: 6px;
             border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .chat-input-box {
@@ -582,7 +586,98 @@
             font-size: 12px;
         }
 
-        /* Settings Panel */
+        .camera-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .profile-card-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .profile-avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+        }
+
+        .friend-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-color);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .pass-toggle-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .pass-toggle-wrapper input {
+            width: 100%;
+            padding-left: 45px;
+        }
+
+        .eye-btn {
+            position: absolute;
+            left: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        /* Custom Modal for Create Room Password */
+        #create-room-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 30000;
+            padding: 15px;
+        }
+
+        .modal-box {
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+        }
+
         .setting-group {
             display: flex;
             flex-direction: column;
@@ -657,6 +752,22 @@
         <div class="loading-text" id="loading-text">1%</div>
     </div>
 
+    <!-- Create Room Password Modal -->
+    <div id="create-room-modal">
+        <div class="modal-box">
+            <h3 style="color: var(--accent-color); font-size: 16px;">چێکرنا ژوورا VIP</h3>
+            <div style="font-size: 12px;">پاسوۆردەکێ بۆ ژوورا خۆ بنڤیسە:</div>
+            <div class="pass-toggle-wrapper">
+                <input type="password" id="modal-new-room-pass" class="room-input" placeholder="پاسوۆرد (Password)...">
+                <button class="eye-btn" onclick="toggleModalPasswordVisibility()">👁️</button>
+            </div>
+            <div style="display: flex; gap: 6px; margin-top: 5px;">
+                <button class="room-action-btn" style="flex:1;" onclick="submitCreateRoom()">چێکرن</button>
+                <button class="seek-btn" style="flex:1;" onclick="closeCreateRoomModal()">پاشگەزبۆن</button>
+            </div>
+        </div>
+    </div>
+
     <div id="lang-overlay" style="display: none;">
         <div class="lang-box">
             <h2 id="lang-title">زمانێ خۆ هەلبژێرە / Select Language</h2>
@@ -667,10 +778,9 @@
         </div>
     </div>
 
-    <!-- Sign Up & Login Overlay -->
     <div id="auth-overlay">
         <div class="auth-box">
-            <img src="logo.png" alt="Logo" class="auth-logo">
+            <img src="logo.png" alt="Logo" class="auth-logo" id="auth-logo-preview">
             <h2 id="auth-main-title">LEGEND TV - VIP</h2>
             
             <div class="auth-tabs">
@@ -680,10 +790,15 @@
 
             <div id="signup-fields" style="display: none; flex-direction: column; gap: 8px;">
                 <input type="text" id="signup-name" class="auth-input" placeholder="ناڤێ تە (Full Name)...">
+                <div style="font-size: 11px; text-align: right;">وێنێ پروفایلی بارکە:</div>
+                <input type="file" id="signup-photo-file" accept="image/*" class="auth-input" style="font-size:11px;" onchange="previewSignupPhoto(event)">
             </div>
 
-            <input type="text" id="auth-username" class="auth-input" placeholder=يوزەرنەيم (Username)...">
-            <input type="password" id="auth-password" class="auth-input" placeholder="پاسوۆرد (Password)...">
+            <input type="text" id="auth-username" class="auth-input" placeholder="يوزەرنەيم (Username)...">
+            <div class="pass-toggle-wrapper">
+                <input type="password" id="auth-password" class="auth-input" placeholder="پاسوۆرد (Password)...">
+                <button class="eye-btn" onclick="toggleAuthPasswordVisibility()">👁️</button>
+            </div>
             
             <div id="auth-error" class="auth-error">خەلەتی هەەیە د زانیاریان دا!</div>
             <button class="auth-btn" id="auth-submit-btn" onclick="handleAuthSubmit()">چوونا ژوورڤە (Login)</button>
@@ -723,10 +838,13 @@
 
         <div class="nav-tabs">
             <button class="tab-btn active" id="tab-tv-btn" onclick="switchTab('tv')">📺 TV</button>
-            <button class="tab-btn" id="tab-room-btn" onclick="switchTab('room')">💬 ROOM VIP</button>
+            <button class="tab-btn" id="tab-room-btn" onclick="switchTab('room')">💬 ROOM</button>
+            <button class="tab-btn" id="tab-profile-btn" onclick="switchTab('profile')">👤 PROFILE</button>
+            <button class="tab-btn" id="tab-friends-btn" onclick="switchTab('friends')">👥 FRIENDS</button>
             <button class="tab-btn" id="tab-set-btn" onclick="switchTab('setting')">⚙️ SETTINGS</button>
         </div>
 
+        <!-- TAB 1: TV -->
         <div class="tab-panel active" id="panel-tv">
             <div class="category-title" id="cat-kurdish">کەناڵێن کوردی</div>
             <div class="channels-grid">
@@ -749,46 +867,120 @@
             </div>
         </div>
 
+        <!-- TAB 2: ROOM VIP -->
         <div class="tab-panel" id="panel-room">
-            <div class="category-title">FULL VIP ROOM (Custom Players & Chat)</div>
+            <div class="category-title">FULL VIP ROOM & PASSWORDS</div>
             
             <div class="room-box" id="room-join-box">
-                <div style="font-size: 12px; opacity: 0.9;">ژوورەکێ چێکە، یان ID ژوورێ (6 ڕاغمی) بنڤیسە دا پشکدار ببی!</div>
-                <button class="room-action-btn" onclick="createNewRoom()">✨ ژوورەکا نوو چێکە (Create Room)</button>
+                <div style="font-size: 12px; opacity: 0.9;">ژوورەکێ چێکە ب پاسوۆرد، یان ID ژوورێ بنڤیسە!</div>
+                <button class="room-action-btn" onclick="openCreateRoomModal()">✨ ژوورەکا نوو چێکە (Create Room)</button>
                 
-                <div class="room-controls" style="margin-top: 5px;">
+                <div class="room-controls" style="margin-top: 5px; flex-direction: column; gap: 6px;">
                     <input type="text" id="room-id-input" class="room-input" placeholder="ID ژوورا 6 ڕاغمی بنڤیسە..." maxlength="6">
+                    <div class="pass-toggle-wrapper">
+                        <input type="password" id="room-password-input" class="room-input" placeholder="پاسوۆردێ ژوورێ (Password)...">
+                        <button class="eye-btn" onclick="toggleJoinPasswordVisibility()">👁️</button>
+                    </div>
                     <button class="room-action-btn" onclick="joinRoom()">Join Room</button>
                 </div>
             </div>
 
             <div class="room-active-panel" id="room-active-box">
                 <div class="room-info-badge" id="active-room-display">
-                    <span id="room-id-text">Room ID: 123456</span>
-                    <button class="room-danger-btn" id="delete-room-btn" onclick="deleteRoom()">❌ Delete Room (Owner Only)</button>
+                    <div class="room-info-top">
+                        <span id="room-id-text">Room ID: 123456</span>
+                        <button class="room-danger-btn" id="delete-room-btn" onclick="deleteRoom()">❌ Delete Room</button>
+                    </div>
+                    <div class="pass-toggle-wrapper" style="background: var(--card-bg); border-radius: 6px; padding: 2px;">
+                        <input type="password" id="active-room-pass-display" class="room-input" readonly style="border:none; background:transparent; font-size:12px; text-align:right; padding-right:10px;">
+                        <button class="eye-btn" onclick="toggleActiveRoomPasswordVisibility()">👁️</button>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="invite-friend-id" class="room-input" placeholder="ID یا هەڤالی بۆ بانگهێشتکرنێ (Invite)..." maxlength="6">
+                    <button class="room-action-btn" onclick="sendRoomInvite()">Invite 📨</button>
                 </div>
                 
-                <div style="display: flex; gap: 6px;">
-                    <input type="text" id="custom-video-link" class="room-input" placeholder="لينكێ ڤیدیۆیێ (YouTube, Direct Link)...">
-                    <button class="room-action-btn" onclick="playCustomVideoLink()">Play Link</button>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
-                    <span>📁 ڤیدیۆیا موبایلێ بارکە (Custom Players):</span>
-                    <input type="file" id="local-video-file" accept="video/*" style="font-size: 11px; flex: 1;" onchange="uploadLocalVideo(event)">
+                <div id="owner-control-panel" style="display: none; flex-direction: column; gap: 6px; background: rgba(229,9,20,0.05); padding: 8px; border-radius: 8px; border: 1px dashed var(--accent-color);">
+                    <div style="font-size: 11px; font-weight: bold; color: var(--accent-color);">⭐ دەستهەلاتێن خودانێ ژوورێ (Owner Controls Only):</div>
+                    <div style="display: flex; gap: 6px;">
+                        <input type="text" id="custom-video-link" class="room-input" placeholder="لينکێ ڤیدیۆیێ نوו (YouTube/Direct)...">
+                        <button class="room-action-btn" onclick="playCustomVideoLink()">Play Link</button>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 11px;">
+                        <span>📁 ڤیدیۆیا موبایلێ:</span>
+                        <input type="file" id="local-video-file" accept="video/*" style="font-size: 10px; flex: 1;" onchange="uploadLocalVideo(event)">
+                    </div>
                 </div>
 
                 <div class="chat-container" id="room-chat-messages">
-                    <div class="chat-msg"><b>System:</b> خوش هاتن بۆ ژوورا VIP! ل ڤێرە دشێن فیلم و ڤیدیۆیان ب پێکڤەیی تەماشە بکەن.</div>
+                    <div class="chat-msg"><span><b>System:</b> خوش هاتن بۆ ژوورا VIP!</span></div>
                 </div>
 
                 <div class="chat-input-box">
                     <input type="text" id="chat-msg-input" class="room-input" placeholder="پەیاما خۆ ل ڤێرە بنڤیسە..." onkeypress="handleChatKey(event)">
                     <button class="room-action-btn" onclick="sendChatMessage()">ناردن</button>
                     <button class="mic-btn" id="mic-toggle-btn" onclick="toggleMic()">🎤 Mic: Off</button>
+                    <button class="camera-btn" id="camera-toggle-btn" onclick="toggleCamera()">📷 Cam: Off</button>
+                </div>
+                
+                <button class="seek-btn" onclick="leaveActiveRoom()" style="margin-top: 5px; background: #ff3333; color: white; border: none;">⬅️ Back (پاشڤە ڤەگەڕیان ژ ژوورێ)</button>
+            </div>
+        </div>
+
+        <!-- TAB 3: PROFILE -->
+        <div class="tab-panel" id="panel-profile">
+            <div class="category-title">پروفایلا من (Profile Management)</div>
+            <div class="profile-card-box">
+                <img src="logo.png" alt="Avatar" id="profile-display-avatar" class="profile-avatar-preview">
+                <div id="profile-display-name" style="font-weight: bold; font-size: 15px; color: var(--accent-color);">Yuseef</div>
+                <div id="profile-display-id" style="font-size: 12px; opacity: 0.8;">ID: 884210</div>
+
+                <div style="width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                    <label style="font-size: 12px;">گوهۆڕینا وێنەی (Change Photo):</label>
+                    <input type="file" id="profile-new-photo" accept="image/*" class="auth-input" style="font-size: 11px;" onchange="updateProfilePhoto(event)">
+
+                    <label style="font-size: 12px;">گوهۆڕینا ناڤی (Change Name):</label>
+                    <input type="text" id="profile-new-name-input" class="auth-input" placeholder="ناڤێ نوو بنڤیسە...">
+                    <button class="room-action-btn" onclick="saveProfileNameChanges()">تۆمارکرنا ناڤی</button>
+
+                    <button class="seek-btn" onclick="logoutAccount()" style="margin-top: 10px; background: #0088cc; color: white; border: none;">🚪 دەرکەفتن (Logout)</button>
+                    <button class="seek-btn" onclick="deleteUserAccount()" style="background: #ff3333; color: white; border: none;">⚠️ ژێبرنا تەواوا اکاونتی (Delete Account)</button>
                 </div>
             </div>
         </div>
 
+        <!-- TAB 4: FRIENDS -->
+        <div class="tab-panel" id="panel-friends">
+            <div class="category-title">سیستەمێ هەڤالان (Friends System & ID Add)</div>
+            
+            <div style="display: flex; gap: 6px;">
+                <input type="text" id="add-friend-id-input" class="room-input" placeholder="ID یا هەڤالی بنڤیسە (بۆ نموونە: 482910)..." maxlength="6">
+                <button class="room-action-btn" onclick="sendFriendRequest()">زێدەکرن (Add)</button>
+            </div>
+
+            <div style="font-size: 13px; font-weight: bold; color: var(--accent-color); margin-top: 10px;">داخوازیێن هاتن (Incoming Requests):</div>
+            <div id="incoming-requests-list" style="display: flex; flex-direction: column; gap: 4px;">
+                <div class="friend-item-row">
+                    <span><b>Arthur</b> (ID: 554120)</span>
+                    <div style="display: flex; gap: 4px;">
+                        <button class="room-action-btn" style="padding: 4px 8px; font-size: 11px;" onclick="acceptFriend('Arthur', '554120')">پەژرانن</button>
+                        <button class="room-danger-btn" style="display:inline-block; padding: 4px 8px; font-size: 11px;" onclick="rejectFriend(this)">رەتکرن</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="font-size: 13px; font-weight: bold; color: var(--accent-color); margin-top: 10px;">لستا هەڤالێن من (My Friends):</div>
+            <div id="my-friends-list" style="display: flex; flex-direction: column; gap: 4px;">
+                <div class="friend-item-row">
+                    <span><b>Yuseef_Surchi</b> (ID: 100200)</span>
+                    <button class="room-danger-btn" style="display:inline-block; padding: 4px 8px; font-size: 11px; background: #333;" onclick="blockFriend(this)">بلۆککرن (Block)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: SETTINGS -->
         <div class="tab-panel" id="panel-setting">
             <div class="category-title" id="set-title">ڕێکخستنێن سەنتەری</div>
             
@@ -821,7 +1013,6 @@
     </footer>
 
     <script>
-        // Loading animation
         let loadProgress = 1;
         const progressEl = document.getElementById('loading-progress');
         const textEl = document.getElementById('loading-text');
@@ -841,6 +1032,7 @@
                     const savedUser = localStorage.getItem('legend_logged_user');
                     if (savedUser) {
                         authOverlay.style.display = 'none';
+                        loadProfileData();
                     } else {
                         langOverlay.style.display = 'flex';
                     }
@@ -853,8 +1045,12 @@
         let player;
         let currentViewCount = 1980;
         let micActive = false;
+        let cameraActive = false;
+        let cameraStream = null;
         let currentRoomId = null;
         let roomOwner = null;
+        let roomPasswordStorage = {}; 
+        let signupPhotoBase64 = "logo.png";
 
         function selectLanguage(lang) {
             currentLang = lang;
@@ -888,6 +1084,23 @@
             langOverlay.style.display = 'flex';
         }
 
+        function previewSignupPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    signupPhotoBase64 = e.target.result;
+                    document.getElementById('auth-logo-preview').src = signupPhotoBase64;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function toggleAuthPasswordVisibility() {
+            const passInput = document.getElementById('auth-password');
+            passInput.type = passInput.type === 'password' ? 'text' : 'password';
+        }
+
         function handleAuthSubmit() {
             const username = document.getElementById('auth-username').value.trim();
             const password = document.getElementById('auth-password').value.trim();
@@ -906,18 +1119,21 @@
                     errorEl.style.display = 'block';
                     return;
                 }
-                const userData = { fullName, username, password };
+                const randomId = Math.floor(100000 + Math.random() * 900000);
+                const userData = { fullName, username, password, photo: signupPhotoBase64, myId: randomId };
                 localStorage.setItem('legend_user_' + username, JSON.stringify(userData));
                 localStorage.setItem('legend_logged_user', username);
                 
                 authOverlay.style.display = 'none';
                 errorEl.style.display = 'none';
+                loadProfileData();
             } else {
                 const savedDataStr = localStorage.getItem('legend_user_' + username);
                 if ((savedDataStr && JSON.parse(savedDataStr).password === password) || (username === '@YUSEEF_SURCHI' && password === '@YUSEEF_SURCHI') || (username === '@Arthur3345' && password === '@Arthur3345')) {
                     localStorage.setItem('legend_logged_user', username);
                     authOverlay.style.display = 'none';
                     errorEl.style.display = 'none';
+                    loadProfileData();
                 } else {
                     errorEl.innerText = "يوزەر یان پاسوۆرد شاشە!";
                     errorEl.style.display = 'block';
@@ -925,21 +1141,92 @@
             }
         }
 
+        function loadProfileData() {
+            const loggedUser = localStorage.getItem('legend_logged_user');
+            if (!loggedUser) return;
+            const dataStr = localStorage.getItem('legend_user_' + loggedUser);
+            if (dataStr) {
+                const userObj = JSON.parse(dataStr);
+                document.getElementById('profile-display-name').innerText = userObj.fullName || loggedUser;
+                document.getElementById('profile-display-id').innerText = `ID: ${userObj.myId || '884210'} | Username: ${userObj.username}`;
+                if (userObj.photo) {
+                    document.getElementById('profile-display-avatar').src = userObj.photo;
+                }
+            }
+        }
+
+        function updateProfilePhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Img = e.target.result;
+                    document.getElementById('profile-display-avatar').src = base64Img;
+                    const loggedUser = localStorage.getItem('legend_logged_user');
+                    const dataStr = localStorage.getItem('legend_user_' + loggedUser);
+                    if (dataStr) {
+                        let userObj = JSON.parse(dataStr);
+                        userObj.photo = base64Img;
+                        localStorage.setItem('legend_user_' + loggedUser, JSON.stringify(userObj));
+                    }
+                    alert("وێنێ پروفایلی ب سەرکەفتیانە هاتە گوهۆڕین!");
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveProfileNameChanges() {
+            const newName = document.getElementById('profile-new-name-input').value.trim();
+            if (!newName) return;
+            const loggedUser = localStorage.getItem('legend_logged_user');
+            const dataStr = localStorage.getItem('legend_user_' + loggedUser);
+            if (dataStr) {
+                let userObj = JSON.parse(dataStr);
+                userObj.fullName = newName;
+                localStorage.setItem('legend_user_' + loggedUser, JSON.stringify(userObj));
+                document.getElementById('profile-display-name').innerText = newName;
+                alert("ناڤێ پروفایلی هاتە گوهۆڕین!");
+            }
+        }
+
+        function logoutAccount() {
+            localStorage.removeItem('legend_logged_user');
+            location.reload();
+        }
+
+        function deleteUserAccount() {
+            if (confirm("تە دڤێت اکاونتا خۆ ب تمامى ژێببی (Delete Account)؟")) {
+                const loggedUser = localStorage.getItem('legend_logged_user');
+                localStorage.removeItem('legend_user_' + loggedUser);
+                localStorage.removeItem('legend_logged_user');
+                alert("اکاونتا تە هاتە ژێبرن!");
+                location.reload();
+            }
+        }
+
         function switchTab(tabName) {
             const btnTv = document.getElementById('tab-tv-btn');
             const btnRoom = document.getElementById('tab-room-btn');
+            const btnProfile = document.getElementById('tab-profile-btn');
+            const btnFriends = document.getElementById('tab-friends-btn');
             const btnSetting = document.getElementById('tab-set-btn');
             
             const panelTv = document.getElementById('panel-tv');
             const panelRoom = document.getElementById('panel-room');
+            const panelProfile = document.getElementById('panel-profile');
+            const panelFriends = document.getElementById('panel-friends');
             const panelSetting = document.getElementById('panel-setting');
 
             btnTv.classList.remove('active');
             btnRoom.classList.remove('active');
+            btnProfile.classList.remove('active');
+            btnFriends.classList.remove('active');
             btnSetting.classList.remove('active');
 
             panelTv.classList.remove('active');
             panelRoom.classList.remove('active');
+            panelProfile.classList.remove('active');
+            panelFriends.classList.remove('active');
             panelSetting.classList.remove('active');
 
             if (tabName === 'tv') {
@@ -948,28 +1235,65 @@
             } else if (tabName === 'room') {
                 btnRoom.classList.add('active');
                 panelRoom.classList.add('active');
+            } else if (tabName === 'profile') {
+                btnProfile.classList.add('active');
+                panelProfile.classList.add('active');
+            } else if (tabName === 'friends') {
+                btnFriends.classList.add('active');
+                panelFriends.classList.add('active');
             } else {
                 btnSetting.classList.add('active');
                 panelSetting.classList.add('active');
             }
         }
 
-        // ROOM VIP Functions with Owner & Delete Logic
-        function createNewRoom() {
+        function openCreateRoomModal() {
+            document.getElementById('create-room-modal').style.display = 'flex';
+            document.getElementById('modal-new-room-pass').value = '';
+        }
+
+        function closeCreateRoomModal() {
+            document.getElementById('create-room-modal').style.display = 'none';
+        }
+
+        function toggleModalPasswordVisibility() {
+            const passInput = document.getElementById('modal-new-room-pass');
+            passInput.type = passInput.type === 'password' ? 'text' : 'password';
+        }
+
+        function submitCreateRoom() {
+            const pass = document.getElementById('modal-new-room-pass').value.trim();
             const randomId = Math.floor(100000 + Math.random() * 900000);
+            roomPasswordStorage[randomId] = pass;
             const currentUser = localStorage.getItem('legend_logged_user') || 'Owner';
             roomOwner = currentUser;
             currentRoomId = randomId;
+            closeCreateRoomModal();
             activateRoom(randomId, true);
+        }
+
+        function toggleJoinPasswordVisibility() {
+            const passInput = document.getElementById('room-password-input');
+            passInput.type = passInput.type === 'password' ? 'text' : 'password';
+        }
+
+        function toggleActiveRoomPasswordVisibility() {
+            const passInput = document.getElementById('active-room-pass-display');
+            passInput.type = passInput.type === 'password' ? 'text' : 'password';
         }
 
         function joinRoom() {
             const roomId = document.getElementById('room-id-input').value.trim();
+            const passInput = document.getElementById('room-password-input').value.trim();
+            
             if (roomId.length === 6) {
+                if (roomPasswordStorage[roomId] !== undefined && roomPasswordStorage[roomId] !== passInput) {
+                    alert("پاسوۆردێ ژوورێ شاشە!");
+                    return;
+                }
                 const currentUser = localStorage.getItem('legend_logged_user') || 'User';
-                // پشکنین کو ئایا ئەڤ بەکارهێنەرە خۆدانێ ژوورێیە یان نا (یان ژوورەکی بێ خودان بیت)
                 if (!roomOwner) {
-                    roomOwner = currentUser; // ئەگەر کەسەک پشكداری ژوورەکێ ببێت کو خودان نەبیت دێ بێتە خودان
+                    roomOwner = currentUser;
                 }
                 currentRoomId = roomId;
                 const isOwner = (currentUser === roomOwner);
@@ -983,19 +1307,47 @@
             document.getElementById('room-join-box').style.display = 'none';
             document.getElementById('room-active-box').style.display = 'flex';
             document.getElementById('room-id-text').innerText = `Room ID: ${id} | Owner: ${roomOwner}`;
+            document.getElementById('active-room-pass-display').value = roomPasswordStorage[id] || 'بێ پاسوۆرد';
             
             const deleteBtn = document.getElementById('delete-room-btn');
+            const ownerPanel = document.getElementById('owner-control-panel');
             if (isOwner) {
                 deleteBtn.style.display = 'inline-block';
+                ownerPanel.style.display = 'flex';
             } else {
                 deleteBtn.style.display = 'none';
+                ownerPanel.style.display = 'none';
             }
+        }
+
+        function sendRoomInvite() {
+            const friendId = document.getElementById('invite-friend-id').value.trim();
+            if (!friendId) {
+                alert("تکایە ID یا هەڤالی بنڤیسە بۆ بانگهێشتکرنێ!");
+                return;
+            }
+            alert(`بانگهێشتنامە ب سەرکەفتیانە بۆ ID: ${friendId} هاتە هناردن!`);
+            document.getElementById('invite-friend-id').value = '';
+        }
+
+        function leaveActiveRoom() {
+            if (cameraActive) {
+                toggleCamera();
+            }
+            currentRoomId = null;
+            document.getElementById('room-active-box').style.display = 'none';
+            document.getElementById('room-join-box').style.display = 'flex';
+            document.getElementById('room-id-input').value = '';
+            document.getElementById('room-password-input').value = '';
         }
 
         function deleteRoom() {
             const currentUser = localStorage.getItem('legend_logged_user') || 'User';
             if (currentUser === roomOwner) {
                 if (confirm("تە ئەڤە دڤێت ژوورێ ژناڤ ببی (Delete Room)؟")) {
+                    if (cameraActive) {
+                        toggleCamera();
+                    }
                     currentRoomId = null;
                     roomOwner = null;
                     document.getElementById('room-active-box').style.display = 'none';
@@ -1008,8 +1360,52 @@
             }
         }
 
-        // Custom Player for Links & Uploads in Room
+        function kickUser(btn) {
+            const currentUser = localStorage.getItem('legend_logged_user') || 'User';
+            if (currentUser === roomOwner) {
+                btn.closest('.chat-msg').remove();
+                alert("کەس هاتە کک کرن (Kicked)!");
+            } else {
+                alert("تەنێ خودانێ ژوورێ (Owner) دشێت کەسان ب کک کەت!");
+            }
+        }
+
+        function sendFriendRequest() {
+            const idInput = document.getElementById('add-friend-id-input').value.trim();
+            if (idInput.length !== 6) {
+                alert("تکایە ID یا تەمام (6 ڕاغمی) بنڤیسە!");
+                return;
+            }
+            alert(`داخوازییا زێدەکرنێ بۆ ID: ${idInput} هاتە هناردن!`);
+            document.getElementById('add-friend-id-input').value = '';
+        }
+
+        function acceptFriend(name, id) {
+            const friendsList = document.getElementById('my-friends-list');
+            const newRow = document.createElement('div');
+            newRow.className = 'friend-item-row';
+            newRow.innerHTML = `<span><b>${name}</b> (ID: ${id})</span><button class="room-danger-btn" style="display:inline-block; padding: 4px 8px; font-size: 11px; background: #333;" onclick="blockFriend(this)">بلۆککرن (Block)</button>`;
+            friendsList.appendChild(newRow);
+            event.target.closest('.friend-item-row').remove();
+            alert("هەفال هاتە زێدەکرن بۆ لستا تە!");
+        }
+
+        function rejectFriend(btn) {
+            btn.closest('.friend-item-row').remove();
+            alert("داخوازی هاتە رەتکرن!");
+        }
+
+        function blockFriend(btn) {
+            btn.closest('.friend-item-row').remove();
+            alert("کەس هاتە بلۆککرن (Blocked)!");
+        }
+
         function playCustomVideoLink() {
+            const currentUser = localStorage.getItem('legend_logged_user') || 'User';
+            if (currentUser !== roomOwner) {
+                alert("تنێ خودانێ ژوورێ (Owner) دەستهەلات هەیە ڤیدیۆیی بگۆڕیت!");
+                return;
+            }
             const link = document.getElementById('custom-video-link').value.trim();
             if (!link) return;
 
@@ -1031,6 +1427,11 @@
         }
 
         function uploadLocalVideo(event) {
+            const currentUser = localStorage.getItem('legend_logged_user') || 'User';
+            if (currentUser !== roomOwner) {
+                alert("تنێ خودانێ ژوورێ (Owner) دەستهەلات هەیە ڤیدیۆیی بارکەت!");
+                return;
+            }
             const file = event.target.files[0];
             if (file) {
                 const videoURL = URL.createObjectURL(file);
@@ -1039,7 +1440,6 @@
             }
         }
 
-        // Chat & Mic Functions
         function sendChatMessage() {
             const input = document.getElementById('chat-msg-input');
             const text = input.value.trim();
@@ -1049,7 +1449,13 @@
             const chatContainer = document.getElementById('room-chat-messages');
             const msgDiv = document.createElement('div');
             msgDiv.className = 'chat-msg';
-            msgDiv.innerHTML = `<b>${currentUser}:</b> ${text}`;
+            
+            let kickBtnHtml = '';
+            if (currentUser === roomOwner) {
+                kickBtnHtml = `<button class="room-danger-btn" style="display:inline-block; padding: 2px 6px; font-size: 10px;" onclick="kickUser(this)">Kick ❌</button>`;
+            }
+
+            msgDiv.innerHTML = `<span><b>${currentUser}:</b> ${text}</span> ${kickBtnHtml}`;
             chatContainer.appendChild(msgDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             input.value = '';
@@ -1067,16 +1473,57 @@
             if (micActive) {
                 btn.style.backgroundColor = '#28a745';
                 btn.innerText = "🎤 Mic: On";
-                alert("مایکرۆفۆنا تە یا دەنگێ هاتییە ڤەکرن (Voice Active)");
+                alert("مایکرۆفۆنا دەنگی هاتە ڤەکرن");
             } else {
                 btn.style.backgroundColor = '#0088cc';
                 btn.innerText = "🎤 Mic: Off";
             }
         }
 
+        // Camera Mobile Stream Toggle
+        async function toggleCamera() {
+            const btn = document.getElementById('camera-toggle-btn');
+            const wrapper = document.getElementById('main-player-wrapper');
+
+            if (!cameraActive) {
+                try {
+                    cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: true });
+                    cameraActive = true;
+                    btn.style.backgroundColor = '#ff3333';
+                    btn.innerText = "📷 Cam: On";
+                    
+                    wrapper.innerHTML = `<video id="mobile-cam-video" autoplay playsinline muted style="width:100%; height:100%; transform: scaleX(-1); object-fit: cover;"></video>`;
+                    document.getElementById('mobile-cam-video').srcObject = cameraStream;
+                    alert("کامێرا موبایلێ هاتە ڤەکرن!");
+                } catch (err) {
+                    alert("شاشی د ڤەکرنا کامێرامۆبایلێ دا هاتە روودان: " + err.message);
+                }
+            } else {
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
+                }
+                cameraActive = false;
+                cameraStream = null;
+                btn.style.backgroundColor = '#28a745';
+                btn.innerText = "📷 Cam: Off";
+                
+                wrapper.innerHTML = `
+                    <div id="youtube-player"></div>
+                    <div class="tv-placeholder" id="initial-placeholder">
+                        <h2>LEGEND TV - Stream</h2>
+                        <p>فەرموو ژ خوارێ کەناڵەکی هەلبژێرە</p>
+                    </div>
+                `;
+                alert("کامێرا هاتییە داخستن!");
+            }
+        }
+
         function onYouTubeIframeAPIReady() {}
 
         function playChannel(videoId) {
+            if (cameraActive) {
+                toggleCamera();
+            }
             const wrapper = document.getElementById('main-player-wrapper');
             wrapper.innerHTML = `<div id="youtube-player" style="width:100%; height:100%;"></div>`;
 
